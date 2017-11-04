@@ -1,0 +1,8 @@
+# No artifacts
+*/bin
+*/obj
+packages
+
+# No editor settings
+.vs
+.vscode
