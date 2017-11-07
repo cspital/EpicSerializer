@@ -143,7 +143,7 @@ namespace EpicSerializer
             }
 
             // wrap and set
-            return (object o) =>
+            string transform(object o)
             {
                 var s = converter(o);
                 if (String.IsNullOrWhiteSpace(s) && OmitIfEmpty)
@@ -152,6 +152,8 @@ namespace EpicSerializer
                 }
                 return String.Format("{0},{1}", Field, s != null ? s : "");
             };
+
+            return transform;
         }
 
         /// <summary>
@@ -166,7 +168,7 @@ namespace EpicSerializer
                 throw new EpicSerializerException(String.Format("EpicRepeatAttribute.ValidTypes type {0} is missing from conversion generator.", t.Name));
             }
 
-            return (object o) =>
+            string transform(object o)
             {
                 var iter = converter(o);
                 if (iter == null || iter.Count() == 0)
@@ -180,6 +182,8 @@ namespace EpicSerializer
 
                 return String.Join("\r\n", iter.Select(s => String.Format("{0},{1}", Field, s != null ? s : "")));
             };
+
+            return transform;
         }
 
         /// <summary>
@@ -189,7 +193,7 @@ namespace EpicSerializer
         /// <returns>object -&gt; string</returns>
         private Func<object, string> GetComplexRepeatFunc(Type t)
         {
-            Func<object, IEnumerable<string>> converter = (object o) =>
+            IEnumerable<string> converter (object o)
             {
                 var iter = (IEnumerable<object>)o;
                 using (var epic = new EpicSerializerImpl(t))
@@ -198,11 +202,13 @@ namespace EpicSerializer
                 }
             };
 
-            return (object obj) =>
+            string transform(object obj)
             {
                 var iter = converter(obj);
                 return String.Join("\r\n", iter);
-            };
+            }
+
+            return transform;
         }
     }
 }
