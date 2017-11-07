@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EpicSerializer
 {
-    internal static class Strings
+    internal static class Converters
     {
         internal static string FromString(object o)
         {
