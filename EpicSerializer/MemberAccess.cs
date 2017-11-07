@@ -136,82 +136,8 @@ namespace EpicSerializer
         /// <returns>object -&gt; string</returns>
         private Func<object, string> GetValueFunc(Type t)
         {
-            Func<object, string> converter;
-
-            // string
-            if (t == typeof(string))
-            {
-                converter = Strings.FromString;
-            }
-
-            // DateTime or Nullable<DateTime>
-            else if (t == typeof(DateTime) || t == typeof(DateTime?))
-            {
-                converter = Strings.FromDateTime;
-            }
-
-            // short or Nullable<short>
-            else if (t == typeof(short) || t == typeof(short?))
-            {
-                converter = Strings.FromShort;
-            }
-
-            // ushort or Nullable<ushort>
-            else if (t == typeof(ushort) || t == typeof(ushort?))
-            {
-                converter = Strings.FromUShort;
-            }
-
-            // int of Nullable<int>
-            else if (t == typeof(int) || t == typeof(int?))
-            {
-                converter = Strings.FromInt;
-            }
-
-            // uint or Nullable<uint>
-            else if (t == typeof(uint) || t == typeof(uint?))
-            {
-                converter = Strings.FromUInt;
-            }
-
-            // long or Nullable<long>
-            else if (t == typeof(long) || t == typeof(long?))
-            {
-                converter = Strings.FromLong;
-            }
-
-            // ulong or Nullable<ulong>
-            else if (t == typeof(ulong) || t == typeof(ulong?))
-            {
-                converter = Strings.FromULong;
-            }
-
-            // float or Nullable<float>
-            else if (t == typeof(float) || t == typeof(float?))
-            {
-                converter = Strings.FromFloat;
-            }
-
-            // double or Nullable<double>
-            else if (t == typeof(double) || t == typeof(double?))
-            {
-                converter = Strings.FromDouble;
-            }
-
-            // decimal or Nullable<decimal>
-            else if (t == typeof(decimal) || t == typeof(decimal?))
-            {
-                converter = Strings.FromDecimal;
-            }
-
-            // bool or Nullable<bool>
-            else if (t == typeof(bool) || t == typeof(bool?))
-            {
-                converter = Strings.FromBoolean;
-            }
-
-            // dun goofed
-            else
+            // if type not found in the map, we dun goofed
+            if (!TypeMap.Var.TryGetValue(t, out Func<object, string> converter))
             {
                 throw new EpicSerializerException(String.Format("EpicRecordAttribute.ValidTypes type {0} is missing from conversion generator.", t.Name));
             }
@@ -235,53 +161,7 @@ namespace EpicSerializer
         /// <returns>object -&gt; string</returns>
         private Func<object, string> GetRepeatFunc(Type t)
         {
-            Func<object, IEnumerable<string>> converter;
-            
-            if (t == typeof(string))
-            {
-                converter = Strings.FromStringIter;
-            }
-            else if (t == typeof(DateTime))
-            {
-                converter = Strings.FromDateTimeIter;
-            }
-            else if (t == typeof(short))
-            {
-                converter = Strings.FromShortIter;
-            }
-            else if (t == typeof(ushort))
-            {
-                converter = Strings.FromUShortIter;
-            }
-            else if (t == typeof(int))
-            {
-                converter = Strings.FromIntIter;
-            }
-            else if (t == typeof(uint))
-            {
-                converter = Strings.FromUIntIter;
-            }
-            else if (t == typeof(long))
-            {
-                converter = Strings.FromLongIter;
-            }
-            else if (t == typeof(ulong))
-            {
-                converter = Strings.FromULongIter;
-            }
-            else if (t == typeof(float))
-            {
-                converter = Strings.FromFloatIter;
-            }
-            else if (t == typeof(double))
-            {
-                converter = Strings.FromDoubleIter;
-            }
-            else if (t == typeof(decimal))
-            {
-                converter = Strings.FromDecimalIter;
-            }
-            else
+            if (!TypeMap.Iter.TryGetValue(t, out Func<object, IEnumerable<string>> converter))
             {
                 throw new EpicSerializerException(String.Format("EpicRepeatAttribute.ValidTypes type {0} is missing from conversion generator.", t.Name));
             }
