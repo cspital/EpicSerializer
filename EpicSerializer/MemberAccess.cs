@@ -20,7 +20,7 @@ namespace EpicSerializer
             MemberType = MemberTypes.Field;
         }
 
-        public MemberAccess(PropertyInfo pi)
+        internal MemberAccess(PropertyInfo pi)
         {
             Initialize(pi, pi.PropertyType);
 
