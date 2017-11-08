@@ -35,7 +35,7 @@ namespace EpicSerializer
         /// Convert a single T into an Epic Chronicles string format.
         /// </summary>
         /// <param name="record">Object to serialize</param>
-        /// <returns></returns>
+        /// <returns>The converted record.</returns>
         internal string Convert(object record)
         {
             var lines = new List<string>();
@@ -72,7 +72,7 @@ namespace EpicSerializer
         /// Convert an IEnumerable&lt;T&gt; into IEnumerable&lt;string&gt; Epic Chronicals string format.
         /// </summary>
         /// <param name="records">Objects to serialize</param>
-        /// <returns></returns>
+        /// <returns>IEnumerable of converted records.</returns>
         internal IEnumerable<string> Serialize(IEnumerable<object> records)
         {
             foreach (var record in records)
@@ -81,6 +81,11 @@ namespace EpicSerializer
             }
         }
 
+        /// <summary>
+        /// Generates a playbook for serializing the given type.
+        /// </summary>
+        /// <param name="t">The Type being serialized.</param>
+        /// <returns>Steps to take when serializing this type.</returns>
         private static IEnumerable<MemberAccess> MakeInstructions(Type t)
         {
             var memberAccess = new List<MemberAccess>();
