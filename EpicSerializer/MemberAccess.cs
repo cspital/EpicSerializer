@@ -163,6 +163,7 @@ namespace EpicSerializer
         /// <returns>object -&gt; string</returns>
         private Func<object, string> GetRepeatFunc(Type t)
         {
+            // if type not found in the map, we dun goofed
             if (!TypeMap.Iter.TryGetValue(t, out Func<object, IEnumerable<string>> converter))
             {
                 throw new EpicSerializerException(String.Format("EpicRepeatAttribute.ValidTypes type {0} is missing from conversion generator.", t.Name));
@@ -180,7 +181,7 @@ namespace EpicSerializer
                     return String.Format("{0},", Field);
                 }
 
-                return String.Join("\r\n", iter.Select(s => String.Format("{0},{1}", Field, s != null ? s : "")));
+                return String.Join("\r\n", iter.Select(s => String.Format("{0},{1}", Field, s ?? "")));
             };
 
             return transform;

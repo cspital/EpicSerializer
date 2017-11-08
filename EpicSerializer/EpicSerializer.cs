@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace EpicSerializer
 {
     /// <summary>
-    /// Generic EpicSerializer
+    /// EpicSerializer
     /// </summary>
     /// <typeparam name="T">Any type T where T : class</typeparam>
     public class EpicSerializer<T> : IDisposable
