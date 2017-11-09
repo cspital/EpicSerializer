@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace EpicSerializer
 {
@@ -13,32 +14,7 @@ namespace EpicSerializer
         /// <summary>
         /// Collection of primitive types allowed to be serialized.
         /// </summary>
-        public static Type[] ValidTypes { get; } = new Type[]
-        {
-            typeof(string),
-            typeof(DateTime),
-            typeof(DateTime?),
-            typeof(short),
-            typeof(short?),
-            typeof(ushort),
-            typeof(ushort?),
-            typeof(int),
-            typeof(int?),
-            typeof(uint),
-            typeof(uint?),
-            typeof(long),
-            typeof(long?),
-            typeof(ulong),
-            typeof(ulong?),
-            typeof(float),
-            typeof(float?),
-            typeof(double),
-            typeof(double?),
-            typeof(decimal),
-            typeof(decimal?),
-            typeof(bool),
-            typeof(bool?)
-        };
+        public static ICollection<Type> ValidTypes => TypeMap.Var.Keys;
 
         /// <summary>
         /// Epic Master File field number.

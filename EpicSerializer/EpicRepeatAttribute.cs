@@ -14,20 +14,7 @@ namespace EpicSerializer
         /// <summary>
         /// Collection of primitive types allowed to be serialized.
         /// </summary>
-        public static Type[] ValidTypes { get; } = new Type[]
-        {
-            typeof(string),
-            typeof(DateTime),
-            typeof(short),
-            typeof(ushort),
-            typeof(int),
-            typeof(uint),
-            typeof(long),
-            typeof(ulong),
-            typeof(float),
-            typeof(double),
-            typeof(decimal)
-        };
+        public static ICollection<Type> ValidTypes => TypeMap.Iter.Keys;
 
         /// <summary>
         /// Epic Master File field number.
