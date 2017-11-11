@@ -22,7 +22,7 @@ namespace EpicSerializer
         internal EpicSerializerImpl(Type t)
         {
             SerialType = t;
-            var epicSerialAttr = SerialType.GetCustomAttribute<EpicSerializableAttribute>(false);
+            var epicSerialAttr = SerialType.GetCustomAttribute<EpicSerializableAttribute>(true);
             if (epicSerialAttr == null)
             {
                 throw new EpicSerializerException(String.Format("{0} is not EpicSerializable.", SerialType.Name));
