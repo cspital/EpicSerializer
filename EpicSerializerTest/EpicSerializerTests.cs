@@ -134,5 +134,21 @@ namespace EpicSerializerTest
 
             Assert.AreEqual("1,1234\r\n2300,WA\r\n2301,4321\r\n2300,OR\r\n2301,5432", result);
         }
+
+        [TestMethod]
+        public void ClassExtended_ProduceNormalOutput()
+        {
+            var ex = new Extended
+            {
+                Id = "1234",
+                State = "WA",
+                Code = "1234567"
+            };
+
+            var serial = new EpicSerializer<Extended>();
+            var result = serial.Serialize(ex);
+
+            Assert.AreEqual("1,1234\r\n2300,WA\r\n2301,1234567", result);
+        }
     }
 }
