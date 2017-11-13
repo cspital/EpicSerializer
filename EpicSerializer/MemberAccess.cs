@@ -42,10 +42,7 @@ namespace EpicSerializer
             // member is tagged as EpicRecordAttribute
             if (recordAttribute != null)
             {
-                if (!EpicRecordAttribute.ValidTypes.Contains(memberType))
-                {
-                    throw new EpicSerializerException(String.Format("{0}.{1} is marked as EpicRecord but is not in EpicRecordAttribute.ValidTypes.", mi.DeclaringType.Name, mi.Name));
-                }
+                ValidateRecord(mi, memberType);
 
                 Field = recordAttribute.Field;
                 OmitIfEmpty = recordAttribute.OmitIfEmpty;
@@ -54,35 +51,55 @@ namespace EpicSerializer
             else
             {
                 var innerEnumerableType = GetEnumerableType(memberType);
-                if (innerEnumerableType == null)
+                ValidateRepeat(mi, innerEnumerableType);
+
+                if (TypeIsComplex(innerEnumerableType))
                 {
-                    throw new EpicSerializerException(String.Format("{0}.{1} is marked EpicRepeat, but is not an IEnumerable<T>.", mi.DeclaringType.Name, mi.Name));
-                }
-
-                if (!EpicRepeatAttribute.ValidTypes.Contains(innerEnumerableType))
-                {
-                    // complex type
-                    if (!innerEnumerableType.IsClass)
-                    {
-                        throw new EpicSerializerException(String.Format("{0}.{1} is a complex type marked as EpicRepeat, but is not an IEnumerable<T> where T : class.", mi.DeclaringType.Name, mi.Name));
-                    }
-
-                    var innerSerializable = innerEnumerableType.GetCustomAttribute<EpicSerializableAttribute>();
-                    if (innerSerializable == null)
-                    {
-                        throw new EpicSerializerException(String.Format("{0}.{1} is marked EpicRepeat, but {2} is not marked with EpicSerializable.", mi.DeclaringType.Name, mi.Name, innerEnumerableType.Name));
-                    }
-
+                    ValidateComplex(mi, innerEnumerableType);
                     Value = GetComplexRepeatFunc(innerEnumerableType);
                 }
                 else
                 {
-                    // primitive type
                     Value = GetRepeatFunc(innerEnumerableType);
                 }
 
                 Field = repeatAttribute.Field;
                 OmitIfEmpty = repeatAttribute.OmitIfEmpty;
+            }
+        }
+
+        private bool TypeIsComplex(Type innerEnumerableType)
+        {
+            return !EpicRepeatAttribute.ValidTypes.Contains(innerEnumerableType);
+        }
+
+        private void ValidateComplex(MemberInfo mi, Type innerEnumerableType)
+        {
+            if (!innerEnumerableType.IsClass)
+            {
+                throw new EpicSerializerException(String.Format("{0}.{1} is a complex type marked as EpicRepeat, but is not an IEnumerable<T> where T : class.", mi.DeclaringType.Name, mi.Name));
+            }
+
+            var innerSerializable = innerEnumerableType.GetCustomAttribute<EpicSerializableAttribute>();
+            if (innerSerializable == null)
+            {
+                throw new EpicSerializerException(String.Format("{0}.{1} is marked EpicRepeat, but {2} is not marked with EpicSerializable.", mi.DeclaringType.Name, mi.Name, innerEnumerableType.Name));
+            }
+        }
+
+        private void ValidateRepeat(MemberInfo mi, Type innerEnumerableType)
+        {
+            if (innerEnumerableType == null)
+            {
+                throw new EpicSerializerException(String.Format("{0}.{1} is marked EpicRepeat, but is not an IEnumerable<T>.", mi.DeclaringType.Name, mi.Name));
+            }
+        }
+
+        private void ValidateRecord(MemberInfo mi, Type memberType)
+        {
+            if (!EpicRecordAttribute.ValidTypes.Contains(memberType))
+            {
+                throw new EpicSerializerException(String.Format("{0}.{1} is marked as EpicRecord but is not in EpicRecordAttribute.ValidTypes.", mi.DeclaringType.Name, mi.Name));
             }
         }
 
