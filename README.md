@@ -5,21 +5,21 @@ Epic is a very popular Electronic Medical Record system, with a proprietary form
 
 The library is designed to be scalable, it only performs introspection on your serializable types once, on it's first encounter with that type. During this encounter it creates an access plan that describes how to pull data out of the objects of this type. These plans are stored in a static thread-safe container, so all instances of the Serializer benefit.
 
-Chronicles Format Example:
-1,12345
-2,Biff Jutsu
-45,biffj
-50,1
-2301,ARNP
-2302,WA
-2303,ABC123456
-2301,RN
-2302,WA
-2303,DEF789012
-1,67890
-2,Some Other Person
-45,otherp
-50,1
+Chronicles Format Example:<br/>
+1,12345<br/>
+2,Biff Jutsu<br/>
+45,biffj<br/>
+50,1<br/>
+2301,ARNP<br/>
+2302,WA<br/>
+2303,ABC123456<br/>
+2301,RN<br/>
+2302,WA<br/>
+2303,DEF789012<br/>
+1,67890<br/>
+2,Some Other Person<br/>
+45,otherp<br/>
+50,1<br/>
 ...
 
 ## Code
