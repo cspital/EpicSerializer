@@ -1,6 +1,8 @@
 # __EpicSerializer__
 ### *Epic Chronicles Format Serializer*
 
+https://www.nuget.org/packages/EpicSerializer
+
 Epic is a very popular Electronic Medical Record system, with a proprietary format for bulk importing data through their Chronicles tool. This library makes it easy to serialize arbitrary types into the Chronicles format, which resembles an `OrderedMap<int, string>`. Since Epic configurations can vary so widely among different installations, this library doesn't make any assumptions about how any particular instance is configured.
 
 The library is designed to be scalable, it only performs introspection on your serializable types once, on it's first encounter with that type. During this encounter it creates an access plan that describes how to pull data out of the objects of this type. These plans are stored in a static thread-safe container, so all instances of the Serializer benefit.
