@@ -34,18 +34,8 @@ namespace EpicSerializer
         /// Serialize an IEnumerable of T.
         /// </summary>
         /// <param name="records">IEnumerable of T to serialize.</param>
-        /// <returns>IEnumerable of Epic Chronicles formatted strings.</returns>
-        public IEnumerable<string> Serialize(IEnumerable<T> records)
-        {
-            return Serializer.Serialize(records);
-        }
-
-        /// <summary>
-        /// Serialize an IEnumerable of T.
-        /// </summary>
-        /// <param name="records">IEnumerable of T to serialize.</param>
-        /// <returns>Eagerly built Epic Chronicles formatted string.</returns>
-        public string EagerSerialize(IEnumerable<T> records)
+        /// <returns>Epic Chronicles formatted string.</returns>
+        public string Serialize(IEnumerable<T> records)
         {
             return String.Join("", Serializer.Serialize(records));
         }
