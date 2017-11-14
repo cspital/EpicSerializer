@@ -4,4 +4,13 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <Authors>BiffJutsu</Authors>
+    <Owners>BiffJutsu</Owners>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Description>Epic Chronicles Format Serializer</Description>
+    <PackageLicenseUrl>https://mit-license.org/</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/BiffJutsu/EpicSerializer</PackageProjectUrl>
+  </PropertyGroup>
+
 </Project>
