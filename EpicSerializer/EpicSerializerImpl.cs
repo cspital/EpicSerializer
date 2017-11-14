@@ -69,7 +69,7 @@ namespace EpicSerializer
         }
 
         /// <summary>
-        /// Convert an IEnumerable&lt;T&gt; into IEnumerable&lt;string&gt; Epic Chronicals string format.
+        /// Convert an IEnumerable&lt;T&gt; into IEnumerable&lt;string&gt; Epic Chronicles string format.
         /// </summary>
         /// <param name="records">Objects to serialize</param>
         /// <returns>IEnumerable of converted records.</returns>
@@ -91,8 +91,7 @@ namespace EpicSerializer
             var memberAccess = new List<MemberAccess>();
             var members = t
                 .GetMembers()
-                .Where(v => v.GetCustomAttributes()
-                                .Any(a => a is EpicRepeatAttribute || a is EpicRecordAttribute));
+                .Where(v =>v.GetCustomAttributes().Any(a => a is EpicRepeatAttribute || a is EpicRecordAttribute));
             
             foreach (var member in members)
             {
