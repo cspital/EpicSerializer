@@ -52,7 +52,7 @@ Chronicles Format Example:<br/>
     };
 
     var serial = new EpicSerializer<EpicUser>();
-    string serializedResult = serial.Serialize()
+    string serializedResult = serial.Serialize(user);
     Console.WriteLine(serializedResult);
     
     // Console Output
@@ -97,7 +97,7 @@ Chronicles Format Example:<br/>
     };
 
     var serial = new EpicSerializer<EpicUser>();
-    string serializedResult = serial.Serialize()
+    string serializedResult = serial.Serialize(user);
     Console.WriteLine(serializedResult);
     
     // Console Output
@@ -175,7 +175,7 @@ Chronicles Format Example:<br/>
     };
 
     var serial = new EpicSerializer<EpicUser>();
-    string serializedResult = serial.Serialize()
+    string serializedResult = serial.Serialize(user);
     Console.WriteLine(serializedResult);
     
     // Console Output
