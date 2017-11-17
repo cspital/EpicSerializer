@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace EpicSerializer
 {
+    /// <summary>
+    /// Collection of conversion functions for supported data types.
+    /// </summary>
     internal static class Converters
     {
         internal static string FromString(object o)

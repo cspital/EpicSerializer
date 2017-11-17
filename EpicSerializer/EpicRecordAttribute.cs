@@ -36,6 +36,7 @@ namespace EpicSerializer
             this.Field = Field;
             this.OmitIfEmpty = OmitIfEmpty;
         }
+        
         /// <summary>
         /// Constructor.
         /// </summary>

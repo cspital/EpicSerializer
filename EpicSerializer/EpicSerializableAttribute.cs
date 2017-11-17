@@ -3,22 +3,6 @@ using System;
 namespace EpicSerializer
 {
     /// <summary>
-    /// Document which Master File this class is destined for.
-    /// </summary>
-    public enum MasterFile
-    {
-        /// <summary>
-        /// Schedulable Epic Resource Master File.
-        /// </summary>
-        SER = 1,
-
-        /// <summary>
-        /// Epic User Master File.
-        /// </summary>
-        EMP,
-    }
-
-    /// <summary>
     /// Mark your class to be serialized to Epic Chronicles format.
     /// Specify the MasterFile destination.
     /// </summary>
