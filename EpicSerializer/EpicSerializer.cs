@@ -40,8 +40,9 @@ namespace EpicSerializer
             return String.Join("", Serializer.Serialize(records));
         }
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+        /// <summary>
+        /// IDisposable
+        /// </summary>
         public void Dispose() { }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

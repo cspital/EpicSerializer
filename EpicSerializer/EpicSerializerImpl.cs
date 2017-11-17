@@ -7,12 +7,29 @@ using System.Reflection;
 
 namespace EpicSerializer
 {
+    /// <summary>
+    /// Epic Serializer Implementation
+    /// </summary>
     internal class EpicSerializerImpl : IDisposable
     {
+        /// <summary>
+        /// Map type to serialization steps for all types encountered so far.
+        /// </summary>
         private readonly static ConcurrentDictionary<Type, IEnumerable<MemberAccess>> AccessMap = new ConcurrentDictionary<Type, IEnumerable<MemberAccess>>();
 
+        /// <summary>
+        /// Serialization steps for this instance.
+        /// </summary>
         private IEnumerable<MemberAccess> Access { get; }
+
+        /// <summary>
+        /// Type being serialized.
+        /// </summary>
         private Type SerialType { get; }
+
+        /// <summary>
+        /// Target master file. Unused at the moment.
+        /// </summary>
         protected internal MasterFile File { get; }
 
         /// <summary>
@@ -51,7 +68,7 @@ namespace EpicSerializer
                         o = SerialType.GetProperty(ma.Name).GetValue(record);
                         break;
                     default:
-                        break;
+                        continue;
                 }
 
                 if (ma.OmitIfEmpty && o == null)
@@ -111,8 +128,9 @@ namespace EpicSerializer
             return memberAccess.OrderBy(m => m.Field);
         }
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+        /// <summary>
+        /// IDisposable
+        /// </summary>
         public void Dispose() { }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

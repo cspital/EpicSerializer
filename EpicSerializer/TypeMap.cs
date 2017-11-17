@@ -3,8 +3,14 @@ using System.Collections.Generic;
 
 namespace EpicSerializer
 {
+    /// <summary>
+    /// Contains maps of type to that type's conversion function.
+    /// </summary>
     internal static class TypeMap
     {
+        /// <summary>
+        /// Supported EpicRecord Types
+        /// </summary>
         internal readonly static IDictionary<Type, Func<object, string>> Var = new Dictionary<Type, Func<object, string>>
         {
             { typeof(string), Converters.FromString },
@@ -32,6 +38,9 @@ namespace EpicSerializer
             { typeof(bool?), Converters.FromBoolean }
         };
 
+        /// <summary>
+        /// Supported EpicRepeat Types
+        /// </summary>
         internal readonly static IDictionary<Type, Func<object, IEnumerable<string>>> Iter = new Dictionary<Type, Func<object, IEnumerable<string>>>
         {
             { typeof(string), Converters.FromStringIter },

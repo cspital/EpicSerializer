@@ -9,7 +9,7 @@
     <Title>EpicSerializer</Title>
     <Authors>BiffJutsu</Authors>
     <Owners>BiffJutsu</Owners>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.0.1</PackageVersion>
     <Description>Epic Chronicles Serializer. Serialize arbitrary types into the Epic Chronicles format.</Description>
     <PackageLicenseUrl>https://mit-license.org/</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/BiffJutsu/EpicSerializer</PackageProjectUrl>

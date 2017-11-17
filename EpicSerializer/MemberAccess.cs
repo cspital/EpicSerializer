@@ -5,14 +5,40 @@ using System.Linq;
 
 namespace EpicSerializer
 {
+    /// <summary>
+    /// Represents instructions for accessing a single member of an oject being serialized.
+    /// </summary>
     internal class MemberAccess
     {
+        /// <summary>
+        /// Defines how to convert the member into a string.
+        /// </summary>
         internal Func<object, string> Value { get; private set; }
+
+        /// <summary>
+        /// The Field mapping from EpicRecord or EpicRepeat.
+        /// </summary>
         internal int Field { get; private set; }
+
+        /// <summary>
+        /// The OmitIfEmpty mapping from EpicRecord or EpicRepeat.
+        /// </summary>
         internal bool OmitIfEmpty { get; private set; }
+
+        /// <summary>
+        /// The name of the member.
+        /// </summary>
         internal string Name { get; private set; }
+
+        /// <summary>
+        /// Indicates the type of member (e.g. Field, Property, etc.)
+        /// </summary>
         internal MemberTypes MemberType { get; }
 
+        /// <summary>
+        /// Construct a MemberAccess for a field.
+        /// </summary>
+        /// <param name="fi">FieldInfo for field to access.</param>
         internal MemberAccess(FieldInfo fi)
         {
             Initialize(fi, fi.FieldType);
@@ -20,6 +46,10 @@ namespace EpicSerializer
             MemberType = MemberTypes.Field;
         }
 
+        /// <summary>
+        /// Construct a MemberAccess for a property.
+        /// </summary>
+        /// <param name="pi">PropertyInfo for property to access.</param>
         internal MemberAccess(PropertyInfo pi)
         {
             Initialize(pi, pi.PropertyType);
@@ -27,6 +57,11 @@ namespace EpicSerializer
             MemberType = MemberTypes.Property;
         }
 
+        /// <summary>
+        /// IDisposable
+        /// </summary>
+        /// <param name="mi">MemberInfo for member to access.</param>
+        /// <param name="memberType">The type of the member to access.</param>
         private void Initialize(MemberInfo mi, Type memberType)
         {
             var recordAttribute = mi.GetCustomAttribute<EpicRecordAttribute>();
@@ -68,11 +103,20 @@ namespace EpicSerializer
             }
         }
 
+        /// <summary>
+        /// Returns true if the type is not a supported EpicRepeat type, else false.
+        /// </summary>
+        /// <param name="innerEnumerableType">The type of T in an IEnumerable&lt;T&gt;</param>
         private bool TypeIsComplex(Type innerEnumerableType)
         {
             return !EpicRepeatAttribute.ValidTypes.Contains(innerEnumerableType);
         }
 
+        /// <summary>
+        /// Validates that the member is a valid EpicRepeat for T where T : class.
+        /// </summary>
+        /// <param name="mi">The MemberInfo for the member being accessed.</param>
+        /// <param name="innerEnumerableType">The type of T in an IEnumerable&lt;T&gt;</param>
         private void ValidateComplex(MemberInfo mi, Type innerEnumerableType)
         {
             if (!innerEnumerableType.IsClass)
@@ -87,6 +131,11 @@ namespace EpicSerializer
             }
         }
 
+        /// <summary>
+        /// Validates that the member is a valid EpicRepeat.
+        /// </summary>
+        /// <param name="mi">The MemberInfo for the member being accessed.</param>
+        /// <param name="innerEnumerableType">The type of T in an IEnumerable&lt;T&gt;</param>
         private void ValidateRepeat(MemberInfo mi, Type innerEnumerableType)
         {
             if (innerEnumerableType == null)
@@ -95,31 +144,17 @@ namespace EpicSerializer
             }
         }
 
+        /// <summary>
+        /// Validates that the member is a valid EpicRecord.
+        /// </summary>
+        /// <param name="mi">The MemberInfo for the member being accessed.</param>
+        /// <param name="innerEnumerableType">The type of T in an IEnumerable&lt;T&gt;</param>
         private void ValidateRecord(MemberInfo mi, Type memberType)
         {
             if (!EpicRecordAttribute.ValidTypes.Contains(memberType))
             {
                 throw new EpicSerializerException(String.Format("{0}.{1} is marked as EpicRecord but is not in EpicRecordAttribute.ValidTypes.", mi.DeclaringType.Name, mi.Name));
             }
-        }
-
-        private static bool EnumerableOfPrimitives(Type type)
-        {
-            if (type == typeof(string))
-            {
-                return false;
-            }
-
-            foreach (var i in type.GetInterfaces())
-            {
-                if (i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEnumerable<>))
-                {
-                    var gArgs = i.GetGenericArguments()[0];
-                    return EpicRepeatAttribute.ValidTypes.Contains(gArgs);
-                }
-            }
-
-            return false;
         }
 
         /// <summary>
