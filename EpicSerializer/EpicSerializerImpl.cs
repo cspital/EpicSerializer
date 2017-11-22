@@ -108,7 +108,8 @@ namespace EpicSerializer
             var memberAccess = new List<MemberAccess>();
             var members = t
                 .GetMembers()
-                .Where(v =>v.GetCustomAttributes().Any(a => a is EpicRepeatAttribute || a is EpicRecordAttribute));
+                .Where(v => v.GetCustomAttributes()
+                            .Any(a => a is EpicRepeatAttribute || a is EpicRecordAttribute));
             
             foreach (var member in members)
             {
@@ -116,11 +117,9 @@ namespace EpicSerializer
                 {
                     case MemberTypes.Field:
                         memberAccess.Add(new MemberAccess((FieldInfo)member));
-                        break;
+                        continue;
                     case MemberTypes.Property:
                         memberAccess.Add(new MemberAccess((PropertyInfo)member));
-                        break;
-                    default:
                         continue;
                 }
             }
