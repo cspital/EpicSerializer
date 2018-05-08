@@ -134,7 +134,7 @@ Chronicles Format Example:<br/>
     }
 
     [EpicSerializable(MasterFile.EMP)]
-    class Alias
+    class License
     {
         [EpicRecord(Field: 2301)]
         public string Type { get; set; }
